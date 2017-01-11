@@ -1,0 +1,22 @@
+{
+  "name": "rosalind",
+  "version": "1.0.0",
+  "description": "Rosalind problems in node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/golonikum/rosalind.git"
+  },
+  "author": "Nikita Golov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/golonikum/rosalind/issues"
+  },
+  "homepage": "https://github.com/golonikum/rosalind#readme",
+  "dependencies": {
+    "yargs": "^6.6.0"
+  }
+}
