@@ -25,9 +25,8 @@ fs.myInput = function() {
 class Graph {
     /**
      * read a graph from file
-     * @param filepath
      */
-    constructor(filepath) {
+    constructor() {
         let edgeArr = fs
             .myInput()
             .split('\r\n')

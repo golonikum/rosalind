@@ -12,4 +12,4 @@ function allDegrees(graph) {
     fs.myOutput(degrees.join(' '));
 }
 
-allDegrees(new Graph(argv.in));
+allDegrees(new Graph());

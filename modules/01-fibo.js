@@ -2,6 +2,8 @@
  * Fibonacci Numbers
  */
 
+const fs = require('./utils').fs;
+
 function fiboR(n) {
     if (n > 1) {
         return fiboR(n-1) + fiboR(n-2)
@@ -11,15 +13,15 @@ function fiboR(n) {
 }
 
 function fibo(n) {
-    var filled = [0, 1],
-        max = 25;
+    let filled = [0, 1];
 
-    for (var i = 2; i <= max; i++) {
+    for (let i = 2; i <= n; i++) {
         filled[i] = filled[i-1] + filled[i-2];
     }
 
     return filled[n];
 }
 
-console.log(fiboR(21));
-console.log(fibo(21));
+
+let n = ~~fs.myInput();
+fs.myOutput( fibo(n).toString() );
