@@ -25,6 +25,15 @@ fs.myInput = function() {
 fs.myInputAsArray = function() {
     return fs.myInput().split('\r\n');
 };
+fs.myInputArrays = function() {
+    let dataArr = fs.myInputAsArray(),
+        arrCount = ~~dataArr[0].split(' ')[0],
+        arrays = [];
+    for (let i = 0; i < arrCount; i++) {
+        arrays.push( StringUtil.getIntArrayFromString(dataArr[i + 1]) );
+    }
+    return arrays;
+};
 
 class Graph {
     /**
@@ -95,17 +104,40 @@ class StringUtil {
 }
 
 class Sorting {
+    static binarySearch(arr, num, fromInd, toInd, comparator=Sorting.comparator) {
+        if (comparator(num, arr[fromInd]) < 0 || comparator(num, arr[toInd]) > 0) {
+            return -1;
+        } else if (fromInd == toInd) {
+            return ( comparator(num, arr[fromInd]) == 0 ? fromInd : -1 );
+        } else {
+            let middleInd = ~~( (fromInd + toInd) / 2 ),
+                middleNum = arr[middleInd];
+
+            if (comparator(num, middleNum) <= 0) {
+                return Sorting.binarySearch(arr, num, fromInd, middleInd, comparator);
+            } else {
+                return Sorting.binarySearch(arr, num, middleInd + 1, toInd, comparator);
+            }
+        }
+    }
+
     static swap(a, i, j) {
         let temp = a[i];
         a[i] = a[j];
         a[j] = temp;
     }
 
-    static insertionSort(a) {
+    static comparator(first, second) {
+        if (first > second) return 1;
+        else if (first < second) return -1;
+        else return 0;
+    }
+
+    static insertionSort(a, comparator=Sorting.comparator) {
         let counter = 0;
         for (let i = 1; i < a.length; i++) {
             let j = i;
-            while (j > 0 && a[j] < a[j - 1]) {
+            while (j > 0 && comparator(a[j - 1], a[j]) > 0) {
                 Sorting.swap(a, j, j - 1);
                 j = j - 1;
                 counter++;
