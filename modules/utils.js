@@ -16,10 +16,14 @@ fs.myOutput = function(str) {
 fs.myInput = function() {
     let fullFilename = process.argv[1],
         filename = path.basename(fullFilename),
+        extName = path.extname(filename),
         dir = path.dirname(fullFilename),
-        file = argv.in || path.resolve(dir, '../in/', `${filename}.txt`);
+        file = argv.in || path.resolve(dir, '../in/', `${filename.replace(extName, '')}`);
 
     return fs.readFileSync(file, {encoding: 'utf-8'});
+};
+fs.myInputAsArray = function() {
+    return fs.myInput().split('\r\n');
 };
 
 class Graph {
@@ -90,9 +94,75 @@ class StringUtil {
     }
 }
 
+class Sorting {
+    static swap(a, i, j) {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    static insertionSort(a) {
+        let counter = 0;
+        for (let i = 1; i < a.length; i++) {
+            let j = i;
+            while (j > 0 && a[j] < a[j - 1]) {
+                Sorting.swap(a, j, j - 1);
+                j = j - 1;
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    static majority(a) {
+        if (a.length == 0) {
+            return -1;
+        } else if (a.length == 1) {
+            return a[0];
+        }
+        Sorting.insertionSort(a);
+        let needCount = a.length / 2,
+            current = a[0],
+            count = 1;
+        for (let i = 1; i < a.length; i++) {
+            let num = a[i];
+            if (num == current) {
+                count++;
+                if (count > needCount) {
+                    return current;
+                }
+            } else {
+                count = 1;
+                current = num;
+            }
+        }
+        return -1;
+    }
+
+    static mergeSorted(a1, a2) {
+        let i = 0,
+            j = 0,
+            merged = [];
+
+        while ( i < a1.length || j < a2.length ) {
+            if (a1[i] <= a2[j] || a2[j] === undefined) {
+                merged.push(a1[i]);
+                i++;
+            } else {
+                merged.push(a2[j]);
+                j++;
+            }
+        }
+
+        return merged;
+    }
+}
+
+
 module.exports = {
     argv,
     Graph,
     fs,
-    StringUtil
+    StringUtil,
+    Sorting
 };
