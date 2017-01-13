@@ -101,6 +101,11 @@ class StringUtil {
     static getIntArrayFromString(str, separator=' ') {
         return str.split(separator).map( item => ~~item );
     }
+    static getIntMapFromString(str, separator=' ') {
+        let map = {};
+        str.split(separator).forEach( (item, index) => map[item] = index );
+        return map;
+    }
 }
 
 class Sorting {
