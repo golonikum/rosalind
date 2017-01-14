@@ -2,7 +2,7 @@
 Rosalind problems in node.js
 
 1. Common:
-  * <a href="example.com" target="_blank">New Tab</a>
+  * <a href="http://rosalind.info/problems/fibo/" target="_blank">New Tab</a>
   * [Fibonacci Numbers](http://rosalind.info/problems/fibo/) 01-fibo
 2. Divide-and-conquer:
   * [Binary Search](http://rosalind.info/problems/bins/) 02-bins
