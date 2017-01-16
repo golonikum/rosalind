@@ -97,6 +97,25 @@ class Graph {
     }
 }
 
+class Digraph extends Graph {
+    /**
+     * read a graph from file
+     */
+    constructor() {
+        super();
+    }
+
+    /**
+     * add edge v-w to this graph
+     * @param v
+     * @param w
+     */
+    addEdge(v, w) {
+        this._adj[v].push(w);
+        this._e++;
+    }
+}
+
 class StringUtil {
     static getIntArrayFromString(str, separator=' ') {
         return str.split(separator).map( item => ~~item );
@@ -195,10 +214,67 @@ class Sorting {
     }
 }
 
+class Queue {
+    constructor() {
+        this.array = [];
+    }
+    isEmpty() {
+        return this.array.length == 0;
+    }
+    enqueue(item) {
+        this.array.push(item);
+    }
+    dequeue() {
+        return this.array.shift();
+    }
+    getCount() {
+        return this.array.length;
+    }
+}
+
+class BreadthFirstPaths {
+    constructor(g, s) {
+        this.g = g;
+        this.s = s;
+        this.marked = new Array(g.v()).fill(false);
+        this.edgeTo = new Array(g.v()).fill(0);
+        this.queue = new Queue();
+        this.bfs();
+    }
+    bfs() {
+        this.marked[this.s] = true;
+        this.queue.enqueue(this.s);
+
+        while (!this.queue.isEmpty()) {
+            let v = this.queue.dequeue(); // Remove next vertex from the queue.
+            this.g.adj(v).forEach(w => {
+                if ( !this.marked[w] ) {   // For every unmarked adjacent vertex,
+                    this.edgeTo[w] = v;    // save last edge on a shortest path,
+                    this.marked[w] = true; // mark it because path is known,
+                    this.queue.enqueue(w); // and add it to the queue.
+                }
+            });
+        }
+    }
+    hasPathTo(v) {
+        return this.marked[v];
+    }
+    pathTo(v) {
+        if ( !this.hasPathTo(v) ) return null;
+        let path = [];
+        for (let x = v; x != this.s; x = this.edgeTo[x])
+            path.push(x);
+        path.push(this.s);
+        return path;
+    }
+}
 
 module.exports = {
     argv,
     Graph,
+    Digraph,
+    Queue,
+    BreadthFirstPaths,
     fs,
     StringUtil,
     Sorting
