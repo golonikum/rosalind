@@ -9,4 +9,4 @@ let a = StringUtil.getIntArrayFromString(fs.myInputAsArray()[1]),
 
 Sorting.mergeSort(a, aux);
 
-fs.myOutput(a.join(' '))
+fs.myOutput(a.join(' '));

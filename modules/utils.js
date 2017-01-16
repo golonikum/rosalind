@@ -195,24 +195,6 @@ class Sorting {
         return -1;
     }
 
-    static mergeSorted(a1, a2) {
-        let i = 0,
-            j = 0,
-            merged = [];
-
-        while ( i < a1.length || j < a2.length ) {
-            if (a1[i] <= a2[j] || a2[j] === undefined) {
-                merged.push(a1[i]);
-                i++;
-            } else {
-                merged.push(a2[j]);
-                j++;
-            }
-        }
-
-        return merged;
-    }
-
     static merge(a, aux, lo, mid, hi) {
         // copy to aux[]
         for (let k = lo; k <= hi; k++) {
@@ -243,6 +225,35 @@ class Sorting {
         Sorting.mergeSort(a, aux, lo, mid);
         Sorting.mergeSort(a, aux, mid+1, hi);
         Sorting.merge(a, aux, lo, mid, hi);
+    }
+
+    static sink(a, k, N) {
+        while (2*k <= N) {
+            let j = 2*k;
+            if (j < N && a[j] < a[j+1]) j++;
+            if (a[k] >= a[j]) break;
+            Sorting.swap(a, k, j);
+            k = j;
+        }
+    }
+
+    static heap(a) {
+        for (let k = Math.floor((a.length - 1) / 2); k >= 1; k--)
+            Sorting.sink(a, k, a.length - 1);
+    }
+
+    static heapSort(a) {
+        a.unshift(Infinity);
+        Sorting.heap(a);
+
+        let last = a.length - 1;
+        while ( last > 1 ) {
+            Sorting.swap(a, 1, last);
+            last--;
+            Sorting.sink(a, 1, last);
+        }
+
+        a.splice(0, 1);
     }
 }
 
