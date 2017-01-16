@@ -212,6 +212,38 @@ class Sorting {
 
         return merged;
     }
+
+    static merge(a, aux, lo, mid, hi) {
+        // copy to aux[]
+        for (let k = lo; k <= hi; k++) {
+            aux[k] = a[k];
+        }
+
+        // merge back to a[]
+        let i = lo, j = mid+1;
+        for (let k = lo; k <= hi; k++) {
+            if (i > mid)
+                a[k] = aux[j++];
+            else if (j > hi)
+                a[k] = aux[i++];
+            else if (Sorting.comparator(aux[j], aux[i]) < 0)
+                a[k] = aux[j++];
+            else
+                a[k] = aux[i++];
+        }
+    }
+
+    static mergeSort(a, aux, lo, hi) {
+        if (typeof lo == 'undefined') {
+            lo = 0;
+            hi = a.length - 1;
+        }
+        if (hi <= lo) return;
+        let mid = lo + Math.floor( (hi - lo)/2 );
+        Sorting.mergeSort(a, aux, lo, mid);
+        Sorting.mergeSort(a, aux, mid+1, hi);
+        Sorting.merge(a, aux, lo, mid, hi);
+    }
 }
 
 class Queue {
